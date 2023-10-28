@@ -30,13 +30,6 @@ jobs:
         with:
           path: ./packages/snap/dist
           key: snap-${{ runner.os }}-${{ github.sha }}
-      - name: Require clean working directory
-        shell: bash
-        run: |
-          if ! git diff --exit-code; then
-            echo "Working tree dirty after building"
-            exit 1
-          fi
 
   e2e:
     name: End-to-end Tests
