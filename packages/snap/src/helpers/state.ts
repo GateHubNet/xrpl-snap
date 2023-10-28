@@ -11,11 +11,11 @@ export class StateHelper {
     });
   }
 
-  static async get() {
-    let data = await snap.request({
+  static async get(): Promise<State> {
+    let data: State | undefined = (await snap.request({
       method: 'snap_manageState',
       params: { operation: 'get' },
-    });
+    })) as State | undefined;
 
     if (!data) {
       data = {

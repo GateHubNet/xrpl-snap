@@ -12,7 +12,13 @@ export async function postData(
   data: XrplRequestData,
   opts?: { server: string },
 ) {
-  const server = opts?.server ?? (await getServer()).url;
+  const fetchedServer = await getServer();
+  if (!fetchedServer) {
+    throw new Error(
+      'Cannot find any server. Please update state with new server.',
+    );
+  }
+  const server = opts?.server ?? fetchedServer.url;
 
   return fetch(server, {
     method: 'POST',
@@ -32,8 +38,12 @@ export async function postData(
  *
  * @returns Default url of a rippled server.
  */
-export async function getServer(): Promise<StateServer> {
+export async function getServer(): Promise<StateServer | undefined> {
   const state = await StateHelper.get();
+
+  if (!state.servers) {
+    return undefined;
+  }
 
   return state.servers.find((s: StateServer) => Boolean(s.use));
 }

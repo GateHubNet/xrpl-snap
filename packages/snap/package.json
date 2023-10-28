@@ -26,7 +26,8 @@
     "prettier": "prettier src/ --write",
     "serve": "mm-snap serve",
     "start": "mm-snap watch",
-    "test": "jest"
+    "test": "jest --coverage --config ./jest-unit.json",
+    "test:e2e": "jest --config ./e2e/jest-e2e.json"
   },
   "dependencies": {
     "@metamask/key-tree": "^9.0.0",

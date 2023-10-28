@@ -32,6 +32,11 @@ export class Wallet {
     const deriveXrpAddress = await getBIP44AddressKeyDeriver(xrplNode);
 
     const server = await getServer();
+    if (!server) {
+      throw new Error(
+        'Do not have any server in state. Update state and add new server.',
+      );
+    }
 
     const walletDeriverIndex = (srv: StateServer): number => {
       if (srv.livenet) {

@@ -20,10 +20,10 @@ export class AccountTransactions implements IRPCHandler {
   }
 
   async handler(_: string, params: any) {
-    const marker = params.marker;
-    const limit = this.handleLimitParameter(params.limit || 10);
-    
-    let wallet = await Wallet.get();
+    const { marker } = params;
+    const limit = this.handleLimitParameter(params.limit);
+
+    const wallet = await Wallet.get();
 
     return XrplClient.getAccountTransactions(wallet.address, marker, limit);
   }
