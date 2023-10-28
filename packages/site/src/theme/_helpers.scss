@@ -1,0 +1,21 @@
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(359deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.spin-animation {
+  animation: spin 1s linear infinite;
+}
+
+.fade-in {
+  animation: fadeIn .5s linear once;
+}
+
+.pointer {
+  cursor: pointer;
+}

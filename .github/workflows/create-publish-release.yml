@@ -1,0 +1,67 @@
+name: Create Release
+on: 
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+  workflow_dispatch:
+    inputs:
+      base-branch:
+        description: 'The base branch for git operations and the pull request.'
+        default: 'main'
+        required: true
+      release-type:
+        description: 'A SemVer version diff, i.e. major, minor, patch, prerelease etc. Mutually exclusive with "release-version".'
+        required: false
+      release-version:
+        description: 'A specific version to bump to. Mutually exclusive with "release-type".'
+        required: false
+
+jobs:
+  build-test:
+    uses: ./.github/workflows/build-test.yml
+  release:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update CHANGELOG
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ github.ref_name }}
+      - name: Create release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{ steps.changelog.outputs.changes }}
+          draft: false
+          prerelease: false
+          name: Release ${{ github.ref_name }}
+      - name: Commit CHANGELOG
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: master
+          commit_message: 'docs(changelog): update CHANGELOG.md for ${{ github.ref_name }}'
+          file_pattern: CHANGELOG.md
+  deploy:
+    name: Deploy to NPMJS
+    runs-on: ubuntu-latest
+    needs: [release]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          always-auth: true
+          node-version: '20.x'
+          registry-url: https://registry.npmjs.org
+          scope: '@gatehub'
+          cache: 'yarn'
+          cache-dependency-path: 'yarn.lock'
+      - run: pnpm i --frozen-lockfile
+      - run: pnpm run build
+      - run: pnpm publish --access restricted --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_PUBLISH }}

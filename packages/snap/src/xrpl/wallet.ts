@@ -1,0 +1,66 @@
+/* eslint-disable lines-between-class-members */
+import { getBIP44AddressKeyDeriver } from '@metamask/key-tree';
+import * as xal from 'xrpl-accountlib';
+import { str2ab } from '../helpers';
+import { getServer } from '../helpers/api';
+import { StateServer } from '../types';
+
+export class Wallet {
+  public readonly address: string;
+  public readonly publicKey: string;
+  public readonly privateKey: string;
+
+  public constructor(account: xal.XRPL_Account) {
+    this.address = account.address!;
+
+    this.publicKey = account.keypair.publicKey!;
+    this.privateKey = account.keypair.privateKey!;
+  }
+
+  public serialize() {
+    return { address: this.address };
+  }
+
+  public static async get() {
+    const xrplNode = await snap.request({
+      method: 'snap_getBip44Entropy',
+      params: {
+        coinType: 144,
+      },
+    });
+
+    const deriveXrpAddress = await getBIP44AddressKeyDeriver(xrplNode);
+
+    const server = await getServer();
+
+    const walletDeriverIndex = (srv: StateServer): number => {
+      if (srv.livenet) {
+        // reserved 0 - 4
+        if (srv.network === 0) {
+          // xrpl mainnet
+          return 0;
+        }
+
+        // xahau
+        return 4;
+      }
+
+      if (srv.network === 1) {
+        // xrpl testnet
+        return 5;
+      }
+
+      // xahau
+      return 9;
+    };
+    const addressKey0 = await deriveXrpAddress(walletDeriverIndex(server));
+
+    const data = str2ab(addressKey0.privateKey as string);
+    const familySeedData = xal.generate.familySeed({
+      entropy: data,
+    });
+
+    const xrpWallet = new Wallet(familySeedData);
+    return xrpWallet;
+  }
+}

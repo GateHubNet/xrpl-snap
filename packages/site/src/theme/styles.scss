@@ -1,0 +1,13 @@
+
+// @import "./metronic-variables";
+// @import "./variable-overrides";
+// // TODO: only import used modules
+// @import "~bootstrap/scss/bootstrap";
+
+@import "./style.bundle.css";
+@import "./helpers";
+
+:root {
+  --bs-body-bg: #151521;
+  --kt-list-group-bg: #1e1e2d;
+}
