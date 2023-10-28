@@ -7,7 +7,7 @@ on:
     inputs:
       base-branch:
         description: 'The base branch for git operations and the pull request.'
-        default: 'main'
+        default: 'master'
         required: true
       release-type:
         description: 'A SemVer version diff, i.e. major, minor, patch, prerelease etc. Mutually exclusive with "release-version".'
