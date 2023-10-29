@@ -26,6 +26,8 @@ describe('TrustSet', () => {
           currency: 'FOO',
           value: '1000',
         },
+        QualityIn: 10,
+        QualityOut: 10,
         Fee: '10',
       };
 
