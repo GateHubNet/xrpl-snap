@@ -38,7 +38,7 @@ export class SignTransaction implements IRPCHandler {
     return transaction.sign(await Wallet.get());
   }
 
-  handler(_origin: string, params: any) {
+  handler(origin: string, params: any) {
     const { data } = params;
 
     return SignTransaction.SignHelper(origin, data);

@@ -47,5 +47,23 @@ describe('AccountTransactions', () => {
       const accountTransactionInstance = new AccountTransactions();
       accountTransactionInstance.handler('', { limit });
     });
+
+    it('should return result from getAccountTransaction rest call', async () => {
+      const limit = 12;
+      const mockedAddress = 'myAddress';
+      const mockedResolvedValue = 'test';
+
+      Wallet.get = jest.fn().mockResolvedValue({ address: mockedAddress });
+      XrplClient.getAccountTransactions = jest
+        .fn()
+        .mockResolvedValue(mockedResolvedValue);
+
+      const accountTransactionInstance = new AccountTransactions();
+      const handlerResult = await accountTransactionInstance.handler('', {
+        limit,
+      });
+
+      expect(handlerResult).toBe(mockedResolvedValue);
+    });
   });
 });

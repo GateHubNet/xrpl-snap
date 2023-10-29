@@ -40,7 +40,6 @@ export async function postData(
  */
 export async function getServer(): Promise<StateServer | undefined> {
   const state = await StateHelper.get();
-
   if (!state.servers) {
     return undefined;
   }
