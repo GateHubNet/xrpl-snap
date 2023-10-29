@@ -7,13 +7,9 @@ export class TransactionDialog {
   private static GenerateDialogHeader(origin: string): Component[] {
     const headerDialog: Component[] = [heading('Sign XRPL Transaction')];
 
-    if (Boolean(origin) && origin.length > 0) {
-      headerDialog.push(
-        text(`Got a request from ${origin} to sign following transaction`),
-      );
-    } else {
-      text(`Got a request to sign following transaction`);
-    }
+    headerDialog.push(
+      text(`Got a request from ${origin} to sign following transaction`),
+    );
 
     return headerDialog;
   }
@@ -36,7 +32,6 @@ export class TransactionDialog {
       return transactionInstance.generateTransactionSpecificDialog(
         transactionData,
       );
-      return [];
     } catch (err) {
       if (err instanceof NotImplementedError) {
         return TransactionDialog.GenerateNotImplementErrorDialog(
