@@ -1,3 +1,5 @@
+import { TransactionDialog } from '../transactions/transaction-dialog';
+import { Wallet } from '../xrpl/wallet';
 import { SignTransaction } from './sign-transaction';
 
 describe('SignTransaction', () => {
