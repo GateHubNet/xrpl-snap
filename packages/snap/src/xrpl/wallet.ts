@@ -21,6 +21,27 @@ export class Wallet {
     return { address: this.address };
   }
 
+  private static walletDeriverIndex(srv: StateServer): number {
+    if (srv.livenet) {
+      // reserved 0 - 4
+      if (srv.network === 0) {
+        // xrpl mainnet
+        return 0;
+      }
+
+      // xahau
+      return 4;
+    }
+
+    if (srv.network === 1) {
+      // xrpl testnet
+      return 5;
+    }
+
+    // xahau
+    return 9;
+  }
+
   public static async get() {
     const xrplNode = await snap.request({
       method: 'snap_getBip44Entropy',
@@ -38,27 +59,7 @@ export class Wallet {
       );
     }
 
-    const walletDeriverIndex = (srv: StateServer): number => {
-      if (srv.livenet) {
-        // reserved 0 - 4
-        if (srv.network === 0) {
-          // xrpl mainnet
-          return 0;
-        }
-
-        // xahau
-        return 4;
-      }
-
-      if (srv.network === 1) {
-        // xrpl testnet
-        return 5;
-      }
-
-      // xahau
-      return 9;
-    };
-    const addressKey0 = await deriveXrpAddress(walletDeriverIndex(server));
+    const addressKey0 = await deriveXrpAddress(Wallet.walletDeriverIndex(server));
 
     const data = str2ab(addressKey0.privateKey as string);
     const familySeedData = xal.generate.familySeed({

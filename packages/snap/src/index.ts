@@ -11,6 +11,10 @@ import { RPCHandlerFactory } from './handler/rpc-handler.factory';
  * @throws If the request method is not valid for this snap.
  */
 export const onRpcRequest: OnRpcRequestHandler = ({ origin, request }) => {
+  if (!origin) {
+    throw new Error('Origin parameter must be provided!');
+  }
+
   const rpcHandler = RPCHandlerFactory.create(request.method);
   return rpcHandler.handler(origin, request.params);
 };
