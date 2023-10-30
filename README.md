@@ -9,6 +9,7 @@
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
 [![codecov](https://codecov.io/gh/XRPLSnap/snap/graph/badge.svg?token=GCB2BFC9ZK)](https://codecov.io/gh/XRPLSnap/snap)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+[![Build & Test](https://github.com/XRPLSnap/snap/actions/workflows/build-test.yml/badge.svg)](https://github.com/XRPLSnap/snap/actions/workflows/build-test.yml)
 
 </div>
 
