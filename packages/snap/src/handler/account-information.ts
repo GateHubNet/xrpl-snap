@@ -18,10 +18,10 @@ export class AccountInformation implements IRPCHandler {
         }
         return data.account_data;
       }
-    } catch (err) {
-      throw new Error(``);
-    }
 
-    throw new Error('Unknown error while trying to get account information');
+      return { Account: wallet.address };
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 }
