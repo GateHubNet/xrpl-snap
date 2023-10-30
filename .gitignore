@@ -67,6 +67,7 @@ node_modules/
 .env.test
 
 # Stores VSCode versions used for testing VSCode extensions
+.vscode
 .vscode-test
 
 # yarn v2
