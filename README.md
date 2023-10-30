@@ -70,5 +70,5 @@ TBD
 - [@golobitch](https://github.com/golobitch) - Idea & Initial work
 - [@rpajo](https://github.com/rpajo) - Initial work
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors)
+See also the list of [contributors](https://github.com/XRPLSnap/snap/contributors)
 who participated in this project.
