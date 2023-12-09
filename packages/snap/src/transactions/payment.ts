@@ -2,6 +2,7 @@ import { Component, text } from '@metamask/snaps-ui/dist';
 import { PaymentTransaction } from '../types';
 import { generateAmountText } from '../helpers';
 import { ITransaction } from './transaction.interface';
+import { XRPlorerTransactionResponse } from './transaction-dialog';
 
 export class Payment implements ITransaction {
   public static GetTransactionType(): string {
@@ -10,11 +11,16 @@ export class Payment implements ITransaction {
 
   public generateTransactionSpecificDialog(
     transactionData: PaymentTransaction,
+    transactionRisk: XRPlorerTransactionResponse,
   ): Component[] {
     const dialog: Component[] = [
       text(`**TransactionType:** ${transactionData.TransactionType}`),
-      text(`⚠️ **From:** ${transactionData.Account}`),
-      text(`✅ **Destination:** ${transactionData.Destination}`),
+      text(`✅ **From:** ${transactionData.Account}`),
+      text(
+        `${transactionRisk.status > 0 ? '⚠️' : '✅'} **Destination:** ${
+          transactionData.Destination
+        }`,
+      ),
     ];
 
     if (transactionData.DestinationTag) {

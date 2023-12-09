@@ -3,6 +3,12 @@ import { TransactionData } from '../types';
 import { NotImplementedError } from '../types/errors';
 import { TransactionFactory } from './transaction.factory';
 
+export type XRPlorerTransactionResponse = {
+  status: number;
+  domain?: string;
+  address?: string;
+};
+
 export class TransactionDialog {
   private static GenerateDialogHeader(origin: string): Component[] {
     const headerDialog: Component[] = [heading('Sign XRPL Transaction')];
@@ -26,11 +32,13 @@ export class TransactionDialog {
 
   private static GenerateDialogBody(
     transactionData: TransactionData,
+    risk: XRPlorerTransactionResponse,
   ): Component[] {
     try {
       const transactionInstance = TransactionFactory.create(transactionData);
       return transactionInstance.generateTransactionSpecificDialog(
         transactionData,
+        risk,
       );
     } catch (err) {
       if (err instanceof NotImplementedError) {
@@ -53,13 +61,43 @@ export class TransactionDialog {
     return footerDialog;
   }
 
+  private static RiskLevel(
+    transactionRisk: XRPlorerTransactionResponse,
+  ): Component[] {
+    const riskDialog = [
+      text(`⚠️ **Destination address was previously reported as risky!** ⚠️`),
+      text(`⚠️ **Status (0-3): ${transactionRisk.status}** ⚠️`),
+    ];
+
+    if (transactionRisk.domain) {
+      riskDialog.push(text(`⚠️ Domain: ${transactionRisk.domain} ⚠️`));
+    }
+
+    return riskDialog;
+  }
+
   public static GenerateDialog(
     origin: string,
     transactionData: TransactionData,
+    transactionRiskLevel?: XRPlorerTransactionResponse,
   ): Component[] {
-    return TransactionDialog.GenerateDialogHeader(origin)
-      .concat([divider()])
-      .concat(TransactionDialog.GenerateDialogBody(transactionData))
+    let dialog = TransactionDialog.GenerateDialogHeader(origin).concat([
+      divider(),
+    ]);
+
+    if (transactionRiskLevel && transactionRiskLevel.status > 0) {
+      dialog = dialog
+        .concat(TransactionDialog.RiskLevel(transactionRiskLevel))
+        .concat([divider()]);
+    }
+
+    const risk = { status: 0 };
+    if (transactionRiskLevel) {
+      risk.status = transactionRiskLevel.status;
+    }
+
+    return dialog
+      .concat(TransactionDialog.GenerateDialogBody(transactionData, risk))
       .concat([divider()])
       .concat(TransactionDialog.GenerateDialogFooter());
   }

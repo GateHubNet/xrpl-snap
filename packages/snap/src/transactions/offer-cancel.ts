@@ -2,6 +2,7 @@ import { Component, text } from '@metamask/snaps-ui/dist';
 import { OfferCancelTransaction } from '../types';
 import { generateAmountText } from '../helpers';
 import { ITransaction } from './transaction.interface';
+import { XRPlorerTransactionResponse } from './transaction-dialog';
 
 export class OfferCancel implements ITransaction {
   public static GetTransactionType(): string {
@@ -10,6 +11,7 @@ export class OfferCancel implements ITransaction {
 
   public generateTransactionSpecificDialog(
     transactionData: OfferCancelTransaction,
+    _risk: XRPlorerTransactionResponse,
   ): Component[] {
     return [
       text(`**TransactionType:** ${transactionData.TransactionType}`),

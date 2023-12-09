@@ -74,8 +74,17 @@ export type OfferCancelTransaction = BasicTransaction & {
   OfferSequence: number;
 };
 
+export type NFTokenCreateOffer = BasicTransaction & {
+  Owner: string;
+  NFTokenID: string;
+  Amount: Amount;
+  Expiration: number;
+  Destination: string;
+};
+
 export type TransactionData =
   | PaymentTransaction
   | TrustSetTransaction
   | OfferCreateTransaction
-  | OfferCancelTransaction;
+  | OfferCancelTransaction
+  | NFTokenCreateOffer;
