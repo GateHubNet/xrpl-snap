@@ -42,7 +42,7 @@ describe('Payment', () => {
 
       const data: Component[] = [
         text(`**TransactionType:** ${transactionData.TransactionType}`),
-        text(`⚠️ **From:** ${transactionData.Account}`),
+        text(`✅ **From:** ${transactionData.Account}`),
         text(`✅ **Destination:** ${transactionData.Destination}`),
         text(`**Destination Tag:** ${transactionData.DestinationTag}`),
         text(`**Amount:** 30 USD`),
@@ -51,7 +51,9 @@ describe('Payment', () => {
 
       const paymentInstance = new Payment();
       expect(
-        paymentInstance.generateTransactionSpecificDialog(transactionData),
+        paymentInstance.generateTransactionSpecificDialog(transactionData, {
+          status: 0,
+        }),
       ).toMatchObject(data);
     });
 
@@ -60,7 +62,7 @@ describe('Payment', () => {
 
       const data: Component[] = [
         text(`**TransactionType:** ${transactionData.TransactionType}`),
-        text(`⚠️ **From:** ${transactionData.Account}`),
+        text(`✅ **From:** ${transactionData.Account}`),
         text(`✅ **Destination:** ${transactionData.Destination}`),
         text(`**Amount:** 30 USD`),
         text(`**Fee:** 0.00001 XRP`),
@@ -68,7 +70,9 @@ describe('Payment', () => {
 
       const paymentInstance = new Payment();
       expect(
-        paymentInstance.generateTransactionSpecificDialog(transactionData),
+        paymentInstance.generateTransactionSpecificDialog(transactionData, {
+          status: 0,
+        }),
       ).toMatchObject(data);
     });
   });

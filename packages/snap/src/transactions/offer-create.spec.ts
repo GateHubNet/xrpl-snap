@@ -42,7 +42,9 @@ describe('OfferCreate', () => {
 
       const offerCreateInstance = new OfferCreate();
       expect(
-        offerCreateInstance.generateTransactionSpecificDialog(transactionData),
+        offerCreateInstance.generateTransactionSpecificDialog(transactionData, {
+          status: 0,
+        }),
       ).toMatchObject(data);
     });
   });

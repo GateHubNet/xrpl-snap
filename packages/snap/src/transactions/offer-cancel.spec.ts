@@ -33,7 +33,9 @@ describe('OfferCancel', () => {
 
       const offerCancelInstance = new OfferCancel();
       expect(
-        offerCancelInstance.generateTransactionSpecificDialog(transactionData),
+        offerCancelInstance.generateTransactionSpecificDialog(transactionData, {
+          status: 0,
+        }),
       ).toMatchObject(data);
     });
   });
