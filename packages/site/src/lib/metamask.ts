@@ -70,7 +70,10 @@ export const connectSnap = async (
     const response = await window.ethereum.request({
       method: 'wallet_requestSnaps',
       params: {
-        [snapId]: params
+        [snapId]: {
+          version: '^0.3.2',
+          ...params,
+        }
       }
     });
 
