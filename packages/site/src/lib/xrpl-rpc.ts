@@ -95,20 +95,6 @@ export const getAccountInfo = async (
   }
 };
 
-export const getTransactionInfo = async (transactionHash?: string) => {
-  console.log('get transaction info', transactionHash, SNAP_ENDPOINT);
-  return await window.ethereum.request({
-    method: 'wallet_invokeSnap',
-    params: {
-      snapId: SNAP_ENDPOINT,
-      request: {
-        method: 'xrpl_transactionInfo',
-        params: { transactionHash }
-      }
-    }
-  });
-};
-
 export const sendXrps = async (payment: {
   destination: string;
   amount: string;
@@ -131,21 +117,6 @@ export const sendXrps = async (payment: {
         }
       }
     }
-  });
-};
-
-export const getAccountNfts = async (address?: string) => {
-  console.log('get NFTs', address);
-
-  return await window.ethereum.request({
-    method: 'wallet_invokeSnap',
-    params: {
-      snapId: SNAP_ENDPOINT,
-      request: {
-        method: 'xrpl_accountNfts',
-        params: { address },
-      }
-    },
   });
 };
 

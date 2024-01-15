@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy } from "svelte";
   import { checkMetamaskAvailability, connectSnap, getSnap, getSnaps } from "./metamask";
-  import { getAccountInfo, getTransactionInfo, sendXrps, getAccountTransactions, getSnapState, getAccountNfts } from './xrpl-rpc'
+  import { getAccountInfo, sendXrps, getAccountTransactions, getSnapState } from './xrpl-rpc'
   import { accountInfo, metamaskState, snapState } from "./state";
   import type { AccountInfo, MetamaskClient, SnapState } from "./types";
   import { getActiveServer } from "./helpers";
@@ -27,13 +27,12 @@
   const getOwnSnapHandler = async () => response = JSON.stringify(await getSnap());
   const getSnapStateHandler = async () => response = JSON.stringify(await getSnapState());
   const getAccountInfoHandler = async () => response = JSON.stringify(await getAccountInfo());
-  const getTransactionInfoHandler = async () => response = JSON.stringify(await getTransactionInfo("3B297B1A08CE1F9901CD3DF1D40A4B3BA42E5BFA051FEA9C280F3145D454303A"));
+
   const sendXrpsHandler = async () => response = JSON.stringify(await sendXrps({
     destination: "rBvTkVQikhuZBoC7p3zdVbnPr1JscUsuA1",
     amount: "10"
   }))
   const getAccountTransactionsHandler = async () => response = JSON.stringify(await getAccountTransactions());
-  const getAccountNftsHandler = async () => response = JSON.stringify(await getAccountNfts('rsuHaTvJh1bDmDoxX9QcKP7HEBSBt4XsHx'));
 
   const getActiveServerUrl = (): string => {
     if (!_snapState) {
@@ -73,10 +72,8 @@
     <button class="btn btn-primary" on:click={getOwnSnapHandler}>Get local snap</button>
     <button class="btn btn-primary" on:click={getSnapStateHandler}>Get Snap State</button>
     <button class="btn btn-primary" on:click={getAccountInfoHandler}>Account Info</button>
-    <button class="btn btn-primary" on:click={getTransactionInfoHandler}>Transaction Info</button>
     <button class="btn btn-primary" on:click={sendXrpsHandler}>Send XRP</button>
     <button class="btn btn-primary" on:click={getAccountTransactionsHandler}>Account Transactions</button>
-    <button class="btn btn-primary" on:click={getAccountNftsHandler}>Get NFTs test</button>
   </div>
 </div>
 
