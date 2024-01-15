@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.3.2",
   "description": "XRPL Snap is the first fully featured Snap which brings the XRP Ledger to MetaMask.",
   "proposedName": "XRPL Snap",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "AQh/kACfwNJXpDE3vzlbbZXORsVkPYOy9Ctz7+I0p0c=",
+    "shasum": "Yy/l4x8Wc9en0c/3BclP5ixhw6t2hoF5tCjtWbXnCTo=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

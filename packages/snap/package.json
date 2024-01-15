@@ -1,6 +1,6 @@
 {
   "name": "@xrpl-snap/snap",
-  "version": "0.1.0",
+  "version": "0.3.2",
   "private": true,
   "description": "XRPL Snap is the first fully featured Snap which brings the XRP Ledger to MetaMask.",
   "homepage": "https://xrpl-snap.com",
