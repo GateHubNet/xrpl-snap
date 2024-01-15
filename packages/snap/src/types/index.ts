@@ -26,7 +26,7 @@ export type Memo = {
 export type BasicTransaction = {
   Account: string;
   TransactionType: string;
-  Fee?: string;
+  Fee: string;
   Sequence?: number;
   AccountTxnID?: string;
   Flags?: number;

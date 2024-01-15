@@ -16,7 +16,7 @@ export class TrustSet implements ITransaction {
       text(`⚠️ **From:** ${transactionData.Account}`),
       text(`✅ **To:** ${transactionData.LimitAmount.issuer}`),
       text(`**Limit:** ${generateAmountText(transactionData.LimitAmount)}`),
-      text(`**Fee:** ${generateAmountText(transactionData.Fee!)}`),
+      text(`**Fee:** ${generateAmountText(transactionData.Fee)}`),
     ];
   }
 }

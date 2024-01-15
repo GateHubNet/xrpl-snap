@@ -31,7 +31,7 @@ export class Payment implements ITransaction {
 
     return dialog.concat([
       text(`**Amount:** ${generateAmountText(transactionData.Amount)}`),
-      text(`**Fee:** ${generateAmountText(transactionData.Fee!)}`),
+      text(`**Fee:** ${generateAmountText(transactionData.Fee)}`),
     ]);
   }
 }

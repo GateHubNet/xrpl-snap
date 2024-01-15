@@ -18,7 +18,7 @@ export class OfferCreate implements ITransaction {
       text(`⚠️ **From:** ${transactionData.Account}`),
       text(`**TakerPays:** ${generateAmountText(transactionData.TakerPays)}`),
       text(`**TakerGets:** ${generateAmountText(transactionData.TakerGets)}`),
-      text(`**Fee:** ${generateAmountText(transactionData.Fee!)}`),
+      text(`**Fee:** ${generateAmountText(transactionData.Fee)}`),
     ];
   }
 }
