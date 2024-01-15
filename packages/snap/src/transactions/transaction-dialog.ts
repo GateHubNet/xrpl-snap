@@ -64,16 +64,23 @@ export class TransactionDialog {
   private static RiskLevel(
     transactionRisk: XRPlorerTransactionResponse,
   ): Component[] {
-    const riskDialog = [
-      text(`⚠️ **Destination address was previously reported as risky!** ⚠️`),
-      text(`⚠️ **Status (0-3): ${transactionRisk.status}** ⚠️`),
-    ];
+    if (transactionRisk.status > 0) {
+      const riskDialog = [
+        text(`⚠️ **Destination address was previously reported as risky!** ⚠️`),
+        text(`⚠️ **Status (0-3): ${transactionRisk.status}** ⚠️`),
+      ];
 
-    if (transactionRisk.domain) {
-      riskDialog.push(text(`⚠️ Domain: ${transactionRisk.domain} ⚠️`));
+      if (transactionRisk.domain) {
+        riskDialog.push(text(`⚠️ Domain: ${transactionRisk.domain} ⚠️`));
+      }
+
+      return riskDialog;
     }
 
-    return riskDialog;
+    return [
+      text(`⚠️ **We were unable to perform destination address risk check!** ⚠️`),
+      text(`⚠️ **Be absolutely sure that you know the recipient!** ⚠️`)
+    ]
   }
 
   public static GenerateDialog(
@@ -85,7 +92,7 @@ export class TransactionDialog {
       divider(),
     ]);
 
-    if (transactionRiskLevel && transactionRiskLevel.status > 0) {
+    if (transactionRiskLevel && transactionRiskLevel.status !== 0) {
       dialog = dialog
         .concat(TransactionDialog.RiskLevel(transactionRiskLevel))
         .concat([divider()]);

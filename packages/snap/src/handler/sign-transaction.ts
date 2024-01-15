@@ -21,7 +21,10 @@ export class SignTransaction implements IRPCHandler {
         mode: 'cors',
         redirect: 'follow',
       },
-    ).then((response) => response.json());
+    ).then((response) => ({
+      response: response.json(),
+      status: response.status
+    }));
   }
 
   static async SignHelper(origin: string, data: any) {
@@ -41,10 +44,18 @@ export class SignTransaction implements IRPCHandler {
       const payment: PaymentTransaction =
         transaction.Data as PaymentTransaction;
       try {
-        xrplorerTransactionRisk = await SignTransaction.TransactionRisk(
+        const explorerTransactionRiskData = await SignTransaction.TransactionRisk(
           payment.Destination,
         );
-      } catch (err) {}
+
+        if (explorerTransactionRiskData.status === 404) {
+          xrplorerTransactionRisk = { status: 0 };
+        } else {
+          xrplorerTransactionRisk = await explorerTransactionRiskData.response;
+        }
+      } catch (err) {
+        xrplorerTransactionRisk = { status: -1 }
+      }
     }
 
     const signPrompt = await snap.request({

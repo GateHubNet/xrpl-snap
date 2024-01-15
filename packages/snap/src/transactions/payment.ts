@@ -17,7 +17,7 @@ export class Payment implements ITransaction {
       text(`**TransactionType:** ${transactionData.TransactionType}`),
       text(`✅ **From:** ${transactionData.Account}`),
       text(
-        `${transactionRisk.status > 0 ? '⚠️' : '✅'} **Destination:** ${
+        `${transactionRisk.status === 0 ? '✅' : '⚠️' } **Destination:** ${
           transactionData.Destination
         }`,
       ),
