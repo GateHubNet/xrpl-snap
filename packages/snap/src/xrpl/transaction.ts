@@ -63,7 +63,6 @@ export class Transaction {
       },
     });
 
-    // TODO: add a little bit of logic here ... like checking if this even is string and if it look ok
     return XrplClient.submit(blob);
   }
 }

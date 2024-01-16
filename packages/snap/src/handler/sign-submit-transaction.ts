@@ -2,7 +2,6 @@ import { IRPCHandler } from './rpc.interface';
 import { SignTransaction } from './sign-transaction';
 import { SubmitTransaction } from './submit-transaction';
 
-// TODO: remove this method. implement sign method with submit: true
 export class SignSubmitTransaction implements IRPCHandler {
   static RPCMethod(): string {
     return 'xrpl_signAndSubmit';
