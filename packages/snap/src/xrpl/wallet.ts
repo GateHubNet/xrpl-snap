@@ -11,10 +11,14 @@ export class Wallet {
   public readonly privateKey: string;
 
   public constructor(account: xal.XRPL_Account) {
-    this.address = account.address!;
+    if (!account?.address || !account?.keypair?.publicKey || !account?.keypair?.privateKey) {
+      throw new Error("We were unable to generate XRPL Address for you.");
+    }
+    
+    this.address = account.address;
 
-    this.publicKey = account.keypair.publicKey!;
-    this.privateKey = account.keypair.privateKey!;
+    this.publicKey = account.keypair.publicKey;
+    this.privateKey = account.keypair.privateKey;
   }
 
   public serialize() {
