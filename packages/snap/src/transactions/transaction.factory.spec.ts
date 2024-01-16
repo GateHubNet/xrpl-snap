@@ -22,6 +22,7 @@ describe('TransactionFactory', () => {
         Destination: 'rDestination',
         TransactionType: 'Payment',
         Amount: '100',
+        Fee: '12'
       };
 
       trustSetData = {
